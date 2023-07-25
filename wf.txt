@@ -1,0 +1,100 @@
+import pygame
+import random
+#initialize pygame
+pygame.init()
+#set the screen size
+disp_width = 400
+disp_height = 800
+display = pygame.display.set_mode((disp_width,disp_height))
+pygame.display.set_caption("Warfare by 'The HERO'")
+#set up the colors
+black = (51, 51, 51)
+white = (225,225,225)
+blue = (0,0,255)
+dblue =(0,0,139)
+lemon = (127,225,0)
+dgreen = (69,139,0)
+purple = (191,62,255)
+dpurple = (104,34,139)
+red = (238,59,59)
+#set up computer player
+comp_width = 40
+comp_height = 15
+comp_xpos = 200
+comp_ypos = 100
+comp_speed = 10
+comp_xchange = 0
+comp_ychange = 0
+#set up user player
+player_width = 40
+player_height = 15
+player_xpos = 200
+player_ypos = 700
+player_speed = 10
+player_xchange = 0
+player_ychange = 0
+#score
+score = 0
+font = pygame.font.Font(None, 30)
+#game loop
+game_start = True
+game_over = False
+game_close = False
+clock = pygame.time.Clock()
+#defining a the pop up message function
+def message(msg,color):
+    msg = font.render(msg, True, color)
+    display.blit(msg, [200,400])
+#game start
+while game_start:
+    display.fill(white)
+    #handle all events 
+    for event in pygame.event.get():
+        
+        
+        if event.type == pygame.QUIT:
+            game_over = True
+            game_close = True
+            game_start = False
+        #defining movements
+        if event.type == pygame.KEYDOWN:
+            #if event.key == pygame.K_s:
+            #defining the Computers movements
+            if event.key == pygame.K_a:
+                comp_xchange = -10
+                comp_ychange = 0
+            elif event.key == pygame.K_d:
+                comp_xchange = 10
+                comp_ychange = 0
+            #defining the Players movements
+            if event.key == pygame.K_LEFT:
+                player_xchange = -10
+                player_ychange = 0
+            elif event.key == pygame.K_RIGHT:
+                player_xchange = 10
+                player_ychange = 0
+        if game_close == True:
+            display.fill(white)
+            message("You Lost! R-Restart or Q-Quit", red)
+            pygame.display.update()
+                            
+        player_xpos += player_xchange
+        player_ypos += player_ychange
+        comp_xpos += comp_xpos
+        comp_ypos += comp_ychange
+        #
+        #draw the objects
+        pygame.draw.rect(display, black, [comp_xpos, comp_ypos, comp_width, comp_height])
+        pygame.draw.rect(display, red, [player_xpos, player_ypos, player_width, player_height])
+        pygame.draw.rect(display,black, [400,200,30,20])
+	#pygame.draw.rect(display, black, [comp_xpos, player_ypos, player_width, player_height])
+        
+        #Update game
+        pygame.display.update()
+        clock.tick(player_speed)
+        display.fill(white)
+message("You Lost!", red)
+pygame.display.update()
+
+pygame.quit()
+quit()        
